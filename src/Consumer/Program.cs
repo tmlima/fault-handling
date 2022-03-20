@@ -10,6 +10,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddHttpClient<FaultyServiceClient>()
+    .AddPolicyHandler(RetryExtension.CreatePolicy(1))
+    .AddPolicyHandler(CircuitBreakerExtension.CreatePolicy(3, TimeSpan.FromSeconds(5)));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

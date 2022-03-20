@@ -9,6 +9,7 @@ namespace Consumer.Extensions
         {
             return Policy
                 .HandleResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
+                //.WaitAndRetryAsync(2, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
                 .RetryAsync(retryCount, onRetry: (message, retryCount) =>
                 {
                     string msg = $"Retry: {retryCount}";

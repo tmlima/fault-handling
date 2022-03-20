@@ -13,8 +13,22 @@ namespace FaultyService.Controllers
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetWeather")]
-        public IActionResult GetWeather(bool returnError)
+        [HttpGet("GetWeather")]
+        public IActionResult GetWeather()
+        {
+            int value = new Random().Next(5);
+            if (value == 0)
+            {
+                _logger.LogError("error");
+                return StatusCode(500);
+            }
+
+            _logger.LogInformation("ok");
+            return Ok("overcast");
+        }
+
+        [HttpGet("ForceResponse")]
+        public IActionResult ForceResponse(bool returnError)
         {
             if (returnError)
             {

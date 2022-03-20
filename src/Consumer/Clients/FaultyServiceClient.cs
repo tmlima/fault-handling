@@ -11,9 +11,15 @@
             _configuration = configuration;
         }
 
+        public async Task<string> GetWeatherRandomAsync()
+        {
+            HttpResponseMessage response = await _httpClient.GetAsync($"{_configuration["UriFaultyService"]}Weather/GetWeather");
+            return await response.Content.ReadAsStringAsync();
+        }
+
         public async Task<string> GetWeatherAsync(bool willBreak)
         {
-            HttpResponseMessage response = await _httpClient.GetAsync($"{_configuration["UriFaultyService"]}Weather?returnError={willBreak}");
+            HttpResponseMessage response = await _httpClient.GetAsync($"{_configuration["UriFaultyService"]}Weather/ForceResponse?returnError={willBreak}");
             return await response.Content.ReadAsStringAsync();
         }
     }

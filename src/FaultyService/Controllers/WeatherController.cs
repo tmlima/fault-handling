@@ -14,10 +14,9 @@ namespace FaultyService.Controllers
         }
 
         [HttpGet(Name = "GetWeather")]
-        public IActionResult GetWeather()
+        public IActionResult GetWeather(bool returnError)
         {
-            int value = new Random().Next(5);
-            if (value == 0)
+            if (returnError)
             {
                 _logger.LogError("error");
                 return StatusCode(500);
